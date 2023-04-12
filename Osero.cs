@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+
 namespace Osero{
 
 	class Bord{
@@ -25,7 +27,7 @@ namespace Osero{
 		// 指定されたx、yの位置に指定された色の石を置けるかどうかを判定し、石を裏返す処理を行う関数
 		bool put_set(int x, int y, int color) {
 			// 既に石が置かれている場合は置けない。また色が指定されている範囲内かを調べる
-			if (board[x, y] != "0"&&color > 0&&color<3) {
+			if (bord[x, y] != "0"&&color > 0&&color<3) {
 				return false;
 			}
 
@@ -48,7 +50,7 @@ namespace Osero{
 					int cur_y = y + j;
 
 					// 次の位置が盤面内かつ相手の石である限り石を探し続ける
-					while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board[cur_x, cur_y] != "0" && board[cur_x, cur_y] != color.ToString()) {
+					while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] != "0" && bord[cur_x, cur_y] != color.ToString()) {
 						// 裏返す石をリストに追加
 						flip_list.Add(new int[] {cur_x, cur_y});
 
@@ -58,12 +60,12 @@ namespace Osero{
 					}
 
 					// 最後の位置が自分の石である場合、石を裏返す
-					if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board[cur_x, cur_y] == color.ToString()) {
+					if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] == color.ToString()) {
 						can_place = true;
 
 						// 裏返す石を裏返す
 						foreach (int[] flip_pos in flip_list) {
-							board[flip_pos[0], flip_pos[1]] = color.ToString();
+							bord[flip_pos[0], flip_pos[1]] = color.ToString();
 						}
 					}
 				}
