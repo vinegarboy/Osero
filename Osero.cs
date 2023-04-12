@@ -8,27 +8,27 @@ namespace Osero{
 	class Bord{
 
 		//盤面を保存する変数。0は何もおいてない状態。1が白で2が黒
-		public String[,] bord = new String[8,8];
+		public int[,] bord = new int[8,8];
 
 		//盤面のリセットを行う関数
 		public void Init_Bord(){
 			for(int x = 0;x<8;x++){
 				for(int y = 0;y<8;y ++){
-					bord[x,y] = "0";
+					bord[x,y] = 0;
 				}
 			}
 
 			//最初の4マス分の配置
-			bord[3,3] = "1";
-			bord[3,4] = "0";
-			bord[4,3] = "0";
-			bord[4,4] = "1";
+			bord[3,3] = 1;
+			bord[3,4] = 0;
+			bord[4,3] = 0;
+			bord[4,4] = 1;
 		}
 
 		// 指定されたx、yの位置に指定された色の石を置けるかどうかを判定し、石を裏返す処理を行う関数
 		public bool put_stone(int x, int y, int color) {
 			// 既に石が置かれている場合は置けない。また色が指定されている範囲内かを調べる
-			if (bord[x, y] != "0"&&color > 0&&color<3) {
+			if (bord[x, y] != 0&&color > 0&&color<3) {
 				return false;
 			}
 
@@ -51,7 +51,7 @@ namespace Osero{
 					int cur_y = y + j;
 
 					// 次の位置が盤面内かつ相手の石である限り石を探し続ける
-					while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] != "0" && bord[cur_x, cur_y] != color.ToString()) {
+					while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] != 0 && bord[cur_x, cur_y] != color) {
 						// 裏返す石をリストに追加
 						flip_list.Add(new int[] {cur_x, cur_y});
 
@@ -61,12 +61,12 @@ namespace Osero{
 					}
 
 					// 最後の位置が自分の石である場合、石を裏返す
-					if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] == color.ToString()) {
+					if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] == color) {
 						can_place = true;
 
 						// 裏返す石を裏返す
 						foreach (int[] flip_pos in flip_list) {
-							bord[flip_pos[0], flip_pos[1]] = color.ToString();
+							bord[flip_pos[0], flip_pos[1]] = color;
 						}
 					}
 				}
@@ -84,7 +84,7 @@ namespace Osero{
 			for (int x = 0; x < 8; x++) {
 				for (int y = 0; y < 8; y++) {
 					// 既に石が置かれている場合はスキップ
-					if (bord[x, y] != "0") {
+					if (bord[x, y] != 0) {
 						continue;
 					}
 
@@ -103,14 +103,14 @@ namespace Osero{
 							int cur_y = y + j;
 
 							// 次の位置が盤面内かつ相手の石である限り石を探し続ける
-							while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] != "0" && bord[cur_x, cur_y] != color.ToString()) {
+							while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] != 0 && bord[cur_x, cur_y] != color) {
 								// 次の位置に進む
 								cur_x += i;
 								cur_y += j;
 							}
 
 							// 最後の位置が自分の石である場合、石を置ける場所とする
-							if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] == color.ToString()) {
+							if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord[cur_x, cur_y] == color) {
 								can_place = true;
 							}
 						}
@@ -129,16 +129,20 @@ namespace Osero{
 	}
 
 	class AISys{
+		//AIの脳内に存在する盤面情報
 		Bord bord = new Bord();
 
+		//自分の石の色
 		int mycolor = 0;
 
+
+		//自分の石の情報をもらい取得する。
 		AISys(int color){
 			mycolor = color;
 		}
 
 		//盤面のデータからランダムにおける位置に置く
-		public int[] non_consider_put_stone(String[,] bord_data){
+		public int[] non_consider_put_stone(int[,] bord_data){
 			//盤面のデータをセットする。
 			bord.bord = bord_data;
 
