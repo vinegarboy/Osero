@@ -7,7 +7,7 @@ namespace Osero
         static void Main(string[] args){
             //インスタンス変数の宣言
             Bord bd  = new Bord();
-            
+
             //初期化処理
             Console.WriteLine("AIオセロ");
             bd.Init_Bord();

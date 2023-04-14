@@ -190,10 +190,12 @@ namespace Osero{
             mycolor = color;
         }
 
+        //盤面情報をセットする
         public void SetBord(int[,] bord_data){
             bord.bord = bord_data;
         }
 
+        //自分の色を返す
         public int getMyColor(){
             return mycolor;
         }
@@ -213,6 +215,7 @@ namespace Osero{
             return choice_list[new Random().Next(choice_list.Count)];
         }
 
+        //最も置ける場所に石を置く。
         public int[] most_flip_put_stone(){
             int maxFlips = -1;
             int[] maxCoords = new int[] { -1, -1 };
