@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +22,22 @@ namespace Osero{
 			bord[3,4] = 0;
 			bord[4,3] = 0;
 			bord[4,4] = 1;
+		}
+
+		public String View_bord(){
+			//返す用の変数
+			String ret = "";
+
+			//変数retに追加していく
+			for(int y = 0;y<8;y++){
+				for(int x = 0;x<8;x++){
+					ret+=bord[x,y];
+				}
+				//改行を加える。
+				ret+="\n";
+			}
+
+			return ret;
 		}
 
 		// 指定されたx、yの位置に指定された色の石を置けるかどうかを判定し、石を裏返す処理を行う関数

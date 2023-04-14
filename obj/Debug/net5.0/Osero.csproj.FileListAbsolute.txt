@@ -1,0 +1,16 @@
+D:\Projects\Osero\bin\Debug\net5.0\Osero.exe
+D:\Projects\Osero\bin\Debug\net5.0\Osero.deps.json
+D:\Projects\Osero\bin\Debug\net5.0\Osero.runtimeconfig.json
+D:\Projects\Osero\bin\Debug\net5.0\Osero.runtimeconfig.dev.json
+D:\Projects\Osero\bin\Debug\net5.0\Osero.dll
+D:\Projects\Osero\bin\Debug\net5.0\Osero.pdb
+D:\Projects\Osero\obj\Debug\net5.0\Osero.csproj.AssemblyReference.cache
+D:\Projects\Osero\obj\Debug\net5.0\Osero.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Osero\obj\Debug\net5.0\Osero.AssemblyInfoInputs.cache
+D:\Projects\Osero\obj\Debug\net5.0\Osero.AssemblyInfo.cs
+D:\Projects\Osero\obj\Debug\net5.0\Osero.csproj.CoreCompileInputs.cache
+D:\Projects\Osero\obj\Debug\net5.0\Osero.dll
+D:\Projects\Osero\obj\Debug\net5.0\refint\Osero.dll
+D:\Projects\Osero\obj\Debug\net5.0\Osero.pdb
+D:\Projects\Osero\obj\Debug\net5.0\Osero.genruntimeconfig.cache
+D:\Projects\Osero\obj\Debug\net5.0\ref\Osero.dll

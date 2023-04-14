@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "T48xrmAqFPIEYh13+kTqqxqXvIe5UJ/uTK5CZeLTjm04BK1dow5NHxvvUlFoUuZ8kPkYfCH2kbnCFEoHLd3FNA==",
+  "dgSpecHash": "KFtnz3FrRENkRyL2ztkwZSu8iPYlVzWGITOWRIlGMaTIaCiF0SHXlkVb4XfbUWdNNv4sz54IYh+TQEiYXVOt9g==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Osero\\Osero.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\koder\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
   "logs": []
 }
