@@ -1,0 +1,5 @@
+D:\Projects\Osero\obj\Debug\net7.0-windows\Osero.csproj.AssemblyReference.cache
+D:\Projects\Osero\obj\Debug\net7.0-windows\MainWindow.g.cs
+D:\Projects\Osero\obj\Debug\net7.0-windows\App.g.cs
+D:\Projects\Osero\obj\Debug\net7.0-windows\Osero_MarkupCompile.cache
+D:\Projects\Osero\obj\Debug\net7.0-windows\Osero_MarkupCompile.lref
