@@ -14,8 +14,8 @@ namespace Osero
             Console.WriteLine(bd.View_bord());
 
             //AIクラスのインスタンス変数の宣言
-            AISys porn = new AISys(1);
-            AISys john = new AISys(2);
+            AISystem porn = new AISystem(1);
+            AISystem john = new AISystem(2);
 
             //ターンを数える変数
             int tarn = 1;
