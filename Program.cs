@@ -1,5 +1,5 @@
 ﻿using System;
-
+using OseroAI;
 namespace Osero
 {
     class Program
