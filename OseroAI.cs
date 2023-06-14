@@ -8,14 +8,37 @@ namespace OthelloAI{
         //盤面を保存する変数。0は何もおいてない状態。1が白で2が黒
         public int[,] board_data = new int[8,8];
 
+        //学習用盤面データ
+        /*木構造で以下のように登録している
+        前の盤面=>次の盤面=>置いた色(白|黒)=>何回この盤面になったか|勝利数
+        */
+        private Dictionary<int[,] ,Dictionary<int[,],int[,]>> board_Dictionary = new Dictionary<int[,] ,Dictionary<int[,],int[,]>>();
+
         //自分の石の色
         int my_color = 0;
-
-        private bool learnMode = false;
 
         //自分の石の情報をもらい取得する。
         public AISystem(int color){
             my_color = color;
+        }
+
+        //ユーザーの入力によって学習データを生成する。
+        public void LearnFightData(LinkedList<int[,]> fight_data,int win_color){
+            //対戦の記録を連結リストによって処理する。
+            LinkedListNode<int[,]> node = fight_data.First;
+            //最初から最後までの対戦を登録するため最後の一つを外す
+            for(int i = 0;i<fight_data.Count-1;i++){
+                //その盤面が登録済みなら記録を加算する。
+                if(board_Dictionary.ContainsKey(node.Value)){
+                    
+                }else{
+                    //記録していない場合は新規登録する。
+                    //board_Dictionary.Add(node.Value,new Dictionary<int[,], int[]>());
+                    if(win_color == 1){
+                    }else if(win_color == 2){
+                    }
+                }
+            }
         }
 
         //盤面情報をセットする
@@ -30,7 +53,6 @@ namespace OthelloAI{
 
         //盤面のデータからランダムにおける位置に置く
         public int[] non_consider_put_stone(){
-
             //置ける場所を取得する。
             List<int[]> choice_list = can_put_list();
 
@@ -67,8 +89,6 @@ namespace OthelloAI{
             return maxCoords;
         }
 
-
-        //現在の盤面状況を保存するファイルを制作する関数。
         public void learnBoard(){
             string path = @"./learnData/";
             //現在の盤面データはファイル名にする。
@@ -77,16 +97,6 @@ namespace OthelloAI{
                 //ファイルが存在していない場合は盤面データを保存する用のファイルを作成。
                 File.CreateText(path);
             }
-        }
-
-        //学習するかどうかの関数。
-        public void learnON(){
-            learnMode = true;
-            Directory.CreateDirectory("/learnData");
-        }
-
-        public void learnOFF(){
-            learnMode = false;
         }
 
         //石が置ける位置をList<int[]>で返す関数
@@ -186,15 +196,28 @@ namespace OthelloAI{
             return count;
         }
 
+        //現在の盤面データをファイル名用に変換する。
         private String now_board_to_learnFileName(){
             String name = "";
-            //現在の盤面データをファイル名用に変換する。
+            //盤面情報をString型に変換する。
             for(int x = 0;x<8;x++){
                 for(int y = 0;y<8;y ++){
                     name += Convert.ToString(board_data[x,y]);
                 }
             }
             return name;
+        }
+
+        //ファイル名用のデータを盤面データに変換する。
+        private int[,] LearnFileName_to_board(String name){
+            int [,] board_Data = new int[8,8];
+            //盤面情報をint[,]型に変換する。
+            for(int x = 0;x<8;x++){
+                for(int y = 0;y<8;y ++){
+                    board_Data[x,y] = Convert.ToInt32(name[x+y]);
+                }
+            }
+            return board_Data;
         }
     }
 }
