@@ -11,6 +11,8 @@ namespace OthelloAI{
         //学習用盤面データ
         /*木構造で以下のように登録している
         前の盤面=>次の盤面=>置いた色(白|黒)=>何回この盤面になったか|勝利数
+
+        メモ Dictionary<前盤面、新盤面辞書型> => Dictionary<新盤面,色事に分割したデータ> => int[,]{白{経過数,勝利数},黒{経過数,勝利数}}
         */
         private Dictionary<int[,] ,Dictionary<int[,],int[,]>> board_Dictionary = new Dictionary<int[,] ,Dictionary<int[,],int[,]>>();
 
