@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace OseroAI{
+namespace OthelloAI{
     class AISystem{
         //盤面を保存する変数。0は何もおいてない状態。1が白で2が黒
-        public int[,] bord_data = new int[8,8];
+        public int[,] board_data = new int[8,8];
 
         //自分の石の色
-        int mycolor = 0;
+        int my_color = 0;
 
         private bool learnMode = false;
 
         //自分の石の情報をもらい取得する。
         public AISystem(int color){
-            mycolor = color;
+            my_color = color;
         }
 
         //盤面情報をセットする
-        public void SetBord(int[,] bord_data){
-            this.bord_data = bord_data;
+        public void SetBoard(int[,] board_data){
+            this.board_data = board_data;
         }
 
         //自分の色を返す
         public int getMyColor(){
-            return mycolor;
+            return my_color;
         }
 
         //盤面のデータからランダムにおける位置に置く
@@ -58,7 +58,7 @@ namespace OseroAI{
 
             // 最も多くの石をひっくり返せる場所を探す。
             foreach (int[] coords in choiceList){
-                int flips = CountFlipStones(coords[0], coords[1], mycolor);
+                int flips = CountFlipStones(coords[0], coords[1], my_color);
                 if (flips > maxFlips){
                     maxFlips = flips;
                     maxCoords = coords;
@@ -69,10 +69,10 @@ namespace OseroAI{
 
 
         //現在の盤面状況を保存するファイルを制作する関数。
-        public void learnBord(){
+        public void learnBoard(){
             string path = @"./learnData/";
             //現在の盤面データはファイル名にする。
-            path += now_bord_to_learnFileName();
+            path += now_board_to_learnFileName();
             if (!File.Exists(path)){
                 //ファイルが存在していない場合は盤面データを保存する用のファイルを作成。
                 File.CreateText(path);
@@ -98,7 +98,7 @@ namespace OseroAI{
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
                     // 既に石が置かれている場合はスキップ
-                    if (bord_data[x, y] != 0) {
+                    if (board_data[x, y] != 0) {
                         continue;
                     }
 
@@ -117,14 +117,14 @@ namespace OseroAI{
                             int cur_y = y + j;
 
                             // 次の位置が盤面内かつ相手の石である限り石を探し続ける
-                            while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord_data[cur_x, cur_y] != 0 && bord_data[cur_x, cur_y] != mycolor) {
+                            while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board_data[cur_x, cur_y] != 0 && board_data[cur_x, cur_y] != my_color) {
                                 // 次の位置に進む
                                 cur_x += i;
                                 cur_y += j;
                             }
 
                             // 最後の位置が自分の石である場合、石を置ける場所とする
-                            if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && bord_data[cur_x, cur_y] == mycolor) {
+                            if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board_data[cur_x, cur_y] == my_color) {
                                 can_place = true;
                             }
                         }
@@ -149,7 +149,7 @@ namespace OseroAI{
             }
 
             //石がすでに配置されていないかをチェックする。
-            if (bord_data[x,y] != 0){
+            if (board_data[x,y] != 0){
                 return -1;
             }
 
@@ -171,14 +171,14 @@ namespace OseroAI{
                     int flipCount = 0;
 
                     //石を置ける限り走査を続ける
-                    while (nx >= 0 && nx < 8 && ny >= 0 && ny < 8 && bord_data[nx,ny] != 0 && bord_data[nx,ny] != color){
+                    while (nx >= 0 && nx < 8 && ny >= 0 && ny < 8 && board_data[nx,ny] != 0 && board_data[nx,ny] != color){
                         flipCount++;
                         nx += dx;
                         ny += dy;
                     }
 
                     //カウントがある場合は代入する。
-                    if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8 && bord_data[nx,ny] == color && flipCount > 0){
+                    if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8 && board_data[nx,ny] == color && flipCount > 0){
                         count += flipCount;
                     }
                 }
@@ -186,12 +186,12 @@ namespace OseroAI{
             return count;
         }
 
-        private String now_bord_to_learnFileName(){
+        private String now_board_to_learnFileName(){
             String name = "";
             //現在の盤面データをファイル名用に変換する。
             for(int x = 0;x<8;x++){
                 for(int y = 0;y<8;y ++){
-                    name += Convert.ToString(bord_data[x,y]);
+                    name += Convert.ToString(board_data[x,y]);
                 }
             }
             return name;

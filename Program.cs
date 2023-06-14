@@ -1,17 +1,17 @@
 ﻿using System;
-using OseroAI;
-namespace Osero
+using OthelloAI;
+namespace Othello
 {
     class Program
     {
         static void Main(string[] args){
             //インスタンス変数の宣言
-            Bord bd  = new Bord();
+            Board bd  = new Board();
 
             //初期化処理
             Console.WriteLine("AIオセロ");
-            bd.Init_Bord();
-            Console.WriteLine(bd.View_bord());
+            bd.Init_Board();
+            Console.WriteLine(bd.View_board());
 
             //AIクラスのインスタンス変数の宣言
             AISystem porn = new AISystem(1);
@@ -24,7 +24,7 @@ namespace Osero
             while(bd.judge_winner()==-1){
 
                 //ポーンに学習させる
-                porn.SetBord(bd.bord);
+                porn.SetBoard(bd.board);
 
                 //ポジションを決定させる
                 int[] porn_pos = porn.most_flip_put_stone();
@@ -35,11 +35,11 @@ namespace Osero
                 //エラー数値が返ってきていない場合は設置する。
                 if(porn_pos[0] != -1&&porn_pos[1] != -1){
                     bd.put_stone(porn_pos[0],porn_pos[1],porn.getMyColor());
-                    Console.WriteLine($"\n{tarn}ターン目の盤面\nポーンの番\n"+bd.View_bord());
+                    Console.WriteLine($"\n{tarn}ターン目の盤面\nポーンの番\n"+bd.View_board());
                 }
 
                 //ジョンに盤面を見せる
-                john.SetBord(bd.bord);
+                john.SetBoard(bd.board);
 
                 //ジョンのポジションを決定
                 int[] john_pos = john.most_flip_put_stone();
@@ -50,7 +50,7 @@ namespace Osero
                 //エラー数値が返ってきていない場合は設置する
                 if(john_pos[0] != -1&&john_pos[1] != -1){
                     bd.put_stone(john_pos[0],john_pos[1],john.getMyColor());
-                    Console.WriteLine($"\n{tarn}ターン目の盤面\nジョンの番\n"+bd.View_bord());
+                    Console.WriteLine($"\n{tarn}ターン目の盤面\nジョンの番\n"+bd.View_board());
                 }
 
                 //ターン数追加
@@ -58,7 +58,7 @@ namespace Osero
             }
 
             //結果発表
-            Console.WriteLine($"\n最終結果\n"+bd.View_bord());
+            Console.WriteLine($"\n最終結果\n"+bd.View_board());
 
             if(bd.judge_winner()==1){
                 Console.WriteLine("ポーンの勝ち");
