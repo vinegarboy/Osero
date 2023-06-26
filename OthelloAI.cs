@@ -235,13 +235,22 @@ namespace OthelloAI{
             return maxCoords;
         }
 
-        public void learnBoard(){
+        //現在の学習データをファイルに保存します。
+        public void LearnData(){
             string path = @"./learnData/";
-            //現在の盤面データはファイル名にする
-            path += now_board_to_learnFileName();
-            if (!File.Exists(path)){
-                //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
-                File.CreateText(path);
+            StreamWriter sw;
+            foreach (var key in board_Dictionary.Keys.ToArray()){
+                if (!File.Exists(path+board_to_learnFileName(key))){
+                    //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
+                    File.CreateText(path+board_to_learnFileName(key));
+                }
+                sw = new StreamWriter(path+board_to_learnFileName(key));
+                foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
+                    var data = board_Dictionary[key][new_board];
+                    sw.Write(board_to_learnFileName(new_board)+",");
+                    sw.Write($"{data[0,0]},{data[0,1]},{data[1,0]},{data[1,1]},");
+                }
+                sw.Close();
             }
         }
 
@@ -349,6 +358,18 @@ namespace OthelloAI{
             for(int x = 0;x<8;x++){
                 for(int y = 0;y<8;y ++){
                     name += Convert.ToString(board_data[x,y]);
+                }
+            }
+            return name;
+        }
+
+        //盤面データをファイル名用に変換する
+        private String board_to_learnFileName(int[,] board){
+            String name = "";
+            //盤面情報をString型に変換する
+            for(int x = 0;x<8;x++){
+                for(int y = 0;y<8;y ++){
+                    name += Convert.ToString(board[x,y]);
                 }
             }
             return name;
