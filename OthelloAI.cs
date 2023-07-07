@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Othello;
+using System.Text;
 
 namespace OthelloAI{
 
@@ -237,6 +238,33 @@ namespace OthelloAI{
                 }
             }
             return maxCoords;
+        }
+
+        public int[] consider_flip_put_stone(){
+            string path = @"./learnData/";
+            string key = board_to_learnFileName(board_data);
+            int maxFlips_index = 0;
+            int counter = 0;
+            if(File.Exists(path+key)){
+                StreamReader sr = new StreamReader(path+key);
+                String[] data = sr.ReadToEnd().Split(',');
+                for(int i = 0;i<data.Length;i+=5){
+                    if(my_color == 1){
+                        if(counter < int.Parse(data[i+2])/int.Parse(data[i+1])){
+                            counter = int.Parse(data[i+2])/int.Parse(data[i+1]);
+                            maxFlips_index = i;
+                        }
+                    }else if(my_color == 2){
+                        if(counter < int.Parse(data[i+4])/int.Parse(data[i+3])){
+                            counter = int.Parse(data[i+4])/int.Parse(data[i+3]);
+                            maxFlips_index = i;
+                        }
+                    }
+                }
+                //todo 文字を8文字ごとに分割して元の盤面との差分を取る
+            }else{
+                return most_flip_put_stone();
+            }
         }
 
         //学習データを保存する。重複するデータがある際は上書きする。
