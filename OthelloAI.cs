@@ -235,20 +235,92 @@ namespace OthelloAI{
             return maxCoords;
         }
 
-        //現在の学習データをファイルに保存します。
-        public void LearnData(){
+        //学習データを保存する。重複するデータがある際は上書きする。
+        public void LearnDateOverWrite(){
             string path = @"./learnData/";
             StreamWriter sw;
+
+            //変数の各要素にアクセス
             foreach (var key in board_Dictionary.Keys.ToArray()){
                 if (!File.Exists(path+board_to_learnFileName(key))){
                     //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
                     File.CreateText(path+board_to_learnFileName(key));
                 }
-                sw = new StreamWriter(path+board_to_learnFileName(key));
+
+                //書き込み先を選択
+                sw = new StreamWriter(path+board_to_learnFileName(key),false);
+
+                //書き込み先に要素を1つづつ書き込んでいく。
                 foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
                     var data = board_Dictionary[key][new_board];
                     sw.Write(board_to_learnFileName(new_board)+",");
                     sw.Write($"{data[0,0]},{data[0,1]},{data[1,0]},{data[1,1]},");
+                }
+            }
+        }
+
+        //現在の学習データをファイルに加算で保存します。
+        public void LearnDataAdd(){
+            string path = @"./learnData/";
+            StreamWriter sw;
+            StreamReader sr;
+
+            //変数の各要素にアクセス
+            foreach (var key in board_Dictionary.Keys.ToArray()){
+                if (!File.Exists(path+board_to_learnFileName(key))){
+                    //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
+                    File.CreateText(path+board_to_learnFileName(key));
+
+                    //書き込み先を選択
+                    sw = new StreamWriter(path+board_to_learnFileName(key),false);
+
+                    //書き込み先に要素を1つづつ書き込んでいく。
+                    foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
+                        var data = board_Dictionary[key][new_board];
+                        sw.Write(board_to_learnFileName(new_board)+",");
+                        sw.Write($"{data[0,0]},{data[0,1]},{data[1,0]},{data[1,1]},");
+                    }
+                }else{
+                    //書き込み先が存在しているため書き込み先を予め読み込む
+                    sr = new StreamReader(path+board_to_learnFileName(key));
+                    List<String> dates = sr.ReadToEnd().Split(',').ToList();
+                    sr.Close();
+
+                    //ファイルを読み込む
+                    sw = new StreamWriter(path+board_to_learnFileName(key),false);
+
+                    //書き込み先に盤面データが存在しているかを確認するフラグ
+                    bool non_equal = true;
+
+                    //その後の盤面データをすべて読み込んでいく。
+                    foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
+                        non_equal = true;
+                        //元々ある盤面データをすべて読み込む
+                        for(int i = 0;i<dates.Count;i+=5){
+                            //一致する盤面がある場合は数値を加算する。
+                            if(board_to_learnFileName(new_board).Equals(dates[i])){
+                                var data = board_Dictionary[key][new_board];
+                                dates[i+1] = (int.Parse(dates[i+1])+data[0,0]).ToString();
+                                dates[i+2] = (int.Parse(dates[i+2])+data[0,1]).ToString();
+                                dates[i+3] = (int.Parse(dates[i+3])+data[1,0]).ToString();
+                                dates[i+4] = (int.Parse(dates[i+4])+data[1,1]).ToString();
+                                non_equal = false;
+                            }
+                        }
+                        //存在しなかった場合、データを追加していく。
+                        if(non_equal){
+                            var data = board_Dictionary[key][new_board];
+                            dates.Add(board_to_learnFileName(new_board));
+                            dates.Add(data[0,0].ToString());
+                            dates.Add(data[0,1].ToString());
+                            dates.Add(data[1,0].ToString());
+                            dates.Add(data[1,1].ToString());
+                        }
+                    }
+                    //最後にすべてファイルに書き込む
+                    foreach(var d in dates){
+                        sw.Write($"{d},");
+                    }
                 }
                 sw.Close();
             }
