@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -240,14 +241,19 @@ namespace OthelloAI{
             return maxCoords;
         }
 
+        //学習し保存されているデータを用いて置ける位置を算出する
         public int[] consider_flip_put_stone(){
             string path = @"./learnData/";
             string key = board_to_learnFileName(board_data);
             int maxFlips_index = 0;
             int counter = 0;
+
+            //学習データが存在するか確認する
             if(File.Exists(path+key)){
                 StreamReader sr = new StreamReader(path+key);
                 String[] data = sr.ReadToEnd().Split(',');
+
+                //最も勝率の高い返す場所を探す
                 for(int i = 0;i<data.Length;i+=5){
                     if(my_color == 1){
                         if(counter < int.Parse(data[i+2])/int.Parse(data[i+1])){
@@ -261,8 +267,17 @@ namespace OthelloAI{
                         }
                     }
                 }
-                //todo 文字を8文字ごとに分割して元の盤面との差分を取る
+
+                //差分点の座標を取得して位置に変更し返す。
+                int[] pos = new int[2];
+                for(int i = 0;i<key.Length;i++){
+                    if(!Key[i].Equals(data[maxFlips_index][i])){
+                        pos = new int[]{ i/8 , i%8 };
+                    }
+                }
+                return pos;
             }else{
+                //学習データがない場合は最も多く返せる場所を返す
                 return most_flip_put_stone();
             }
         }
@@ -356,6 +371,11 @@ namespace OthelloAI{
                 }
                 sw.Close();
             }
+        }
+
+        //学習データの初期化
+        public void ResetLearnData(){
+            board_Dictionary.Clear();
         }
 
         //石が置ける位置をList<int[]>で返す関数
