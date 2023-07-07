@@ -5,6 +5,10 @@ using System.Linq;
 using Othello;
 
 namespace OthelloAI{
+
+    /// <summary>
+    /// 8*8の盤面データで機能する学習機能付きオセロのCPU
+    /// </summary>
     class AISystem{
         //盤面を保存する変数0は何もおいてない状態1が白で2が黒
         public int[,] board_data = new int[8,8];
