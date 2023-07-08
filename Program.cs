@@ -42,7 +42,8 @@ namespace Othello
                 john.SetBoard(bd.board);
 
                 //ジョンのポジションを決定
-                int[] john_pos = john.most_flip_put_stone();
+                int[] john_pos = john.consider_flip_put_stone();
+                //int[] john_pos = john.most_flip_put_stone();
 
                 //デバッグメッセージ
                 Console.WriteLine($"ジョンの置く場所:{john_pos[0]},{john_pos[1]}");
@@ -66,6 +67,11 @@ namespace Othello
                 Console.WriteLine("ジョンの勝ち");
             }else{
                 Console.WriteLine("引き分け");
+            }
+
+            for(int i = 0;i<10;i++){
+                porn.LearnFightDataSelf(100,100);
+                porn.LearnDataAdd();
             }
         }
     }

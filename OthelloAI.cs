@@ -271,7 +271,7 @@ namespace OthelloAI{
                 //差分点の座標を取得して位置に変更し返す。
                 int[] pos = new int[2];
                 for(int i = 0;i<key.Length;i++){
-                    if(!Key[i].Equals(data[maxFlips_index][i])){
+                    if(!key[i].Equals(data[maxFlips_index][i])){
                         pos = new int[]{ i/8 , i%8 };
                     }
                 }
@@ -316,10 +316,7 @@ namespace OthelloAI{
             foreach (var key in board_Dictionary.Keys.ToArray()){
                 if (!File.Exists(path+board_to_learnFileName(key))){
                     //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
-                    File.CreateText(path+board_to_learnFileName(key));
-
-                    //書き込み先を選択
-                    sw = new StreamWriter(path+board_to_learnFileName(key),false);
+                    sw = File.CreateText(path+board_to_learnFileName(key));
 
                     //書き込み先に要素を1つづつ書き込んでいく。
                     foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
