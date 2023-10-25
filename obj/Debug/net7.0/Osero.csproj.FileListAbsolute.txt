@@ -13,3 +13,17 @@ C:\Users\酢飯太郎\Documents\Projects\Osero\obj\Debug\net7.0\refint\Osero.dll
 C:\Users\酢飯太郎\Documents\Projects\Osero\obj\Debug\net7.0\Osero.pdb
 C:\Users\酢飯太郎\Documents\Projects\Osero\obj\Debug\net7.0\Osero.genruntimeconfig.cache
 C:\Users\酢飯太郎\Documents\Projects\Osero\obj\Debug\net7.0\ref\Osero.dll
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.pdb
+C:\Users\koder\Documents\Projects\Osero\bin\Debug\net7.0\Osero.exe
+C:\Users\koder\Documents\Projects\Osero\bin\Debug\net7.0\Osero.deps.json
+C:\Users\koder\Documents\Projects\Osero\bin\Debug\net7.0\Osero.runtimeconfig.json
+C:\Users\koder\Documents\Projects\Osero\bin\Debug\net7.0\Osero.dll
+C:\Users\koder\Documents\Projects\Osero\bin\Debug\net7.0\Osero.pdb
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.AssemblyInfoInputs.cache
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.AssemblyInfo.cs
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.csproj.CoreCompileInputs.cache
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.dll
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\refint\Osero.dll
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\Osero.genruntimeconfig.cache
+C:\Users\koder\Documents\Projects\Osero\obj\Debug\net7.0\ref\Osero.dll
