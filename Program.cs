@@ -30,7 +30,7 @@ namespace Othello
                 int[] porn_pos = porn.most_flip_put_stone();
 
                 //デバッグメッセージ
-                Console.WriteLine($"ポーンの置く場所:{porn_pos[0]},{porn_pos[1]}");
+                //Console.WriteLine($"ポーンの置く場所:{porn_pos[0]},{porn_pos[1]}");
 
                 //エラー数値が返ってきていない場合は設置する。
                 if(porn_pos[0] != -1&&porn_pos[1] != -1){
@@ -46,7 +46,7 @@ namespace Othello
                 //int[] john_pos = john.most_flip_put_stone();
 
                 //デバッグメッセージ
-                Console.WriteLine($"ジョンの置く場所:{john_pos[0]},{john_pos[1]}");
+                //Console.WriteLine($"ジョンの置く場所:{john_pos[0]},{john_pos[1]}");
 
                 //エラー数値が返ってきていない場合は設置する
                 if(john_pos[0] != -1&&john_pos[1] != -1){
@@ -70,9 +70,10 @@ namespace Othello
             }
 
             for(int i = 0;i<10;i++){
-                porn.LearnFightDataSelf(100,100);
+                porn.LearnFightDataSelf(1,100);
                 porn.LearnDataAdd();
             }
+            Console.WriteLine("Finish");
         }
     }
 }
