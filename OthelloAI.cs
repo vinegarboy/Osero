@@ -12,6 +12,8 @@ namespace OthelloAI{
     /// 8*8の盤面データで機能する学習機能付きオセロのCPU
     /// </summary>
     class AISystem{
+        private string path = @"./learnData/";
+
         //盤面を保存する変数0は何もおいてない状態1が白で2が黒
         public int[,] board_data = new int[8,8];
 
@@ -29,6 +31,9 @@ namespace OthelloAI{
         //自分の石の情報をもらい取得する
         public AISystem(int color){
             my_color = color;
+            if (!Directory.Exists(path)){
+                Directory.CreateDirectory(path);
+            }
         }
 
         //ユーザーの入力によって学習データを生成する
@@ -243,7 +248,7 @@ namespace OthelloAI{
 
         //学習し保存されているデータを用いて置ける位置を算出する
         public int[] consider_flip_put_stone(){
-            string path = @"./learnData/";
+            
             string key = board_to_learnFileName(board_data);
             int maxFlips_index = 0;
             int counter = 0;
@@ -284,7 +289,6 @@ namespace OthelloAI{
 
         //学習データを保存する。重複するデータがある際は上書きする。
         public void LearnDateOverWrite(){
-            string path = @"./learnData/";
             StreamWriter sw;
 
             //変数の各要素にアクセス
@@ -308,7 +312,6 @@ namespace OthelloAI{
 
         //現在の学習データをファイルに加算で保存します。
         public void LearnDataAdd(){
-            string path = @"./learnData/";
             StreamWriter sw;
             StreamReader sr;
 

@@ -17,6 +17,12 @@ namespace Othello
             AISystem porn = new AISystem(1);
             AISystem john = new AISystem(2);
 
+            for(int i = 0;i<10;i++){
+                porn.LearnFightDataSelf(1,100);
+                porn.LearnDataAdd();
+            }
+            Console.WriteLine("LearnFinish");
+
             //ターンを数える変数
             int tarn = 1;
 
@@ -35,7 +41,7 @@ namespace Othello
                 //エラー数値が返ってきていない場合は設置する。
                 if(porn_pos[0] != -1&&porn_pos[1] != -1){
                     bd.put_stone(porn_pos[0],porn_pos[1],porn.getMyColor());
-                    Console.WriteLine($"\n{tarn}ターン目の盤面\nポーンの番\n"+bd.View_board());
+                    //Console.WriteLine($"\n{tarn}ターン目の盤面\nポーンの番\n"+bd.View_board());
                 }
 
                 //ジョンに盤面を見せる
@@ -51,7 +57,7 @@ namespace Othello
                 //エラー数値が返ってきていない場合は設置する
                 if(john_pos[0] != -1&&john_pos[1] != -1){
                     bd.put_stone(john_pos[0],john_pos[1],john.getMyColor());
-                    Console.WriteLine($"\n{tarn}ターン目の盤面\nジョンの番\n"+bd.View_board());
+                    //Console.WriteLine($"\n{tarn}ターン目の盤面\nジョンの番\n"+bd.View_board());
                 }
 
                 //ターン数追加
@@ -68,12 +74,6 @@ namespace Othello
             }else{
                 Console.WriteLine("引き分け");
             }
-
-            for(int i = 0;i<10;i++){
-                porn.LearnFightDataSelf(1,100);
-                porn.LearnDataAdd();
-            }
-            Console.WriteLine("Finish");
         }
     }
 }
