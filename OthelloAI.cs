@@ -14,6 +14,8 @@ namespace OthelloAI{
     class AISystem{
         private string path = @"./learnData/";
 
+        private Random rand = new Random();
+
         //盤面を保存する変数0は何もおいてない状態1が白で2が黒
         public int[,] board_data = new int[8,8];
 
@@ -79,10 +81,9 @@ namespace OthelloAI{
 
         //AIによる戦闘で学習させる. Othelloライブラリを使用します。
         public void LearnFightDataSelf(int most_Choice,int random_Choice){
-            int all_fight = most_Choice+random_Choice;
 
             if(most_Choice > 0){
-                int top_color = (new Random()).Next(1,3);
+                int top_color = rand.Next(2)+1;
                 for(int i = 0;i<most_Choice;i++){
                     var fight_data = StudyingFight(top_color,true);
 
@@ -96,9 +97,10 @@ namespace OthelloAI{
                     }
                 }
             }
+
             if(random_Choice > 0){
-                int top_color = (new Random()).Next(1,3);
-                for(int i = 0;i<most_Choice;i++){
+                int top_color = rand.Next(2)+1;
+                for(int i = 0;i<random_Choice;i++){
                     var fight_data = StudyingFight(top_color,false);
 
                     LearnFightData(fight_data.fight_data,fight_data.win_color,top_color);
@@ -126,7 +128,6 @@ namespace OthelloAI{
             LinkedList<int[,]> fight_data = new LinkedList<int[,]>();
 
             bd.Init_Board();
-            fight_data = new LinkedList<int[,]>();
             fight_data.AddLast(bd.board);
 
             while(bd.judge_winner() == -1){
@@ -213,7 +214,7 @@ namespace OthelloAI{
             }
 
             //ランダムにおける場所を返す
-            return choice_list[new Random().Next(choice_list.Count)];
+            return choice_list[rand.Next(choice_list.Count)];
         }
 
         //最も置ける場所に石を置く
@@ -237,7 +238,7 @@ namespace OthelloAI{
                     maxCoords = coords;
                 }else if(flips == maxFlips){
                     //返せる枚数が同じ場合はランダムで返す
-                    if((new System.Random()).Next(1,2) == 1){
+                    if(rand.Next(1,2) == 1){
                         maxFlips = flips;
                         maxCoords = coords;
                     }
@@ -318,6 +319,7 @@ namespace OthelloAI{
             //変数の各要素にアクセス
             foreach (var key in board_Dictionary.Keys.ToArray()){
                 if (!File.Exists(path+board_to_learnFileName(key))){
+                    
                     //ファイルが存在していない場合は盤面データを保存する用のファイルを作成
                     sw = File.CreateText(path+board_to_learnFileName(key));
 
@@ -342,11 +344,11 @@ namespace OthelloAI{
                     //その後の盤面データをすべて読み込んでいく。
                     foreach(var new_board in board_Dictionary[key].Keys.ToArray()){
                         non_equal = true;
+                        var data = board_Dictionary[key][new_board];
                         //元々ある盤面データをすべて読み込む
                         for(int i = 0;i<dates.Count;i+=5){
                             //一致する盤面がある場合は数値を加算する。
                             if(board_to_learnFileName(new_board).Equals(dates[i])){
-                                var data = board_Dictionary[key][new_board];
                                 dates[i+1] = (int.Parse(dates[i+1])+data[0,0]).ToString();
                                 dates[i+2] = (int.Parse(dates[i+2])+data[0,1]).ToString();
                                 dates[i+3] = (int.Parse(dates[i+3])+data[1,0]).ToString();
@@ -356,7 +358,6 @@ namespace OthelloAI{
                         }
                         //存在しなかった場合、データを追加していく。
                         if(non_equal){
-                            var data = board_Dictionary[key][new_board];
                             dates.Add(board_to_learnFileName(new_board));
                             dates.Add(data[0,0].ToString());
                             dates.Add(data[0,1].ToString());
@@ -366,7 +367,9 @@ namespace OthelloAI{
                     }
                     //最後にすべてファイルに書き込む
                     foreach(var d in dates){
-                        sw.Write($"{d},");
+                        if(d != ""){
+                            sw.Write($"{d},");
+                        }
                     }
                 }
                 sw.Close();

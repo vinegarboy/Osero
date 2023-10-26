@@ -18,8 +18,9 @@ namespace Othello
             AISystem john = new AISystem(2);
 
             for(int i = 0;i<10;i++){
-                porn.LearnFightDataSelf(1,100);
+                porn.LearnFightDataSelf(0,10);
                 porn.LearnDataAdd();
+                porn.ResetLearnData();
             }
             Console.WriteLine("LearnFinish");
 
@@ -33,7 +34,9 @@ namespace Othello
                 porn.SetBoard(bd.board);
 
                 //ポジションを決定させる
-                int[] porn_pos = porn.most_flip_put_stone();
+                int[] porn_pos = porn.consider_flip_put_stone();
+                //int[] porn_pos = porn.most_flip_put_stone();
+                //int[] porn_pos = porn.non_consider_put_stone();
 
                 //デバッグメッセージ
                 //Console.WriteLine($"ポーンの置く場所:{porn_pos[0]},{porn_pos[1]}");
@@ -48,8 +51,9 @@ namespace Othello
                 john.SetBoard(bd.board);
 
                 //ジョンのポジションを決定
-                int[] john_pos = john.consider_flip_put_stone();
-                //int[] john_pos = john.most_flip_put_stone();
+                //int[] john_pos = john.consider_flip_put_stone();
+                int[] john_pos = john.most_flip_put_stone();
+                //int[] john_pos = john.non_consider_put_stone();
 
                 //デバッグメッセージ
                 //Console.WriteLine($"ジョンの置く場所:{john_pos[0]},{john_pos[1]}");
