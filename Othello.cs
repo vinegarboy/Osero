@@ -120,16 +120,28 @@ namespace Othello{
                             // 現在の位置から指定方向に進んでいく
                             int cur_x = x + i;
                             int cur_y = y + j;
-
-                            // 次の位置が盤面内かつ相手の石である限り石を探し続ける
-                            while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board[cur_x, cur_y] != 0 && board[cur_x, cur_y] != color) {
-                                // 次の位置に進む
+                            
+                            int def_x = x+i;
+                            int def_y = y+j;
+                            // 相手の石である限り石を探し続ける
+                            bool can_flip = false;
+                            while (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8) {
+                                int currentCell = board[cur_x, cur_y];
+                                if (currentCell == 0) {
+                                    break;
+                                }
+                                if (currentCell == color) {
+                                    if(def_x != cur_x||def_y!=cur_y){
+                                        can_flip = true;
+                                    }
+                                    break;
+                                }
                                 cur_x += i;
                                 cur_y += j;
                             }
 
                             // 最後の位置が自分の石である場合、石を置ける場所とする
-                            if (cur_x >= 0 && cur_x < 8 && cur_y >= 0 && cur_y < 8 && board[cur_x, cur_y] == color) {
+                            if (can_flip) {
                                 can_place = true;
                             }
                         }
