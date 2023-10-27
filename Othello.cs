@@ -190,6 +190,23 @@ namespace Othello{
             // どちらかのプレイヤーが石を置ける場合、まだ勝敗が決まっていないことを示す
             return -1;
         }
+    
+        //現在の盤面から空白と白と黒の数を返す
+        public int[] Color_Count(){
+            int[] ret = new int[]{0,0,0};
+            for(int x = 0;x<8;x++){
+                for(int y = 0;y<8;y ++){
+                    if(board[x,y]==0){
+                        ret[0]++;
+                    }else if(board[x,y]==1){
+                        ret[1]++;
+                    }else if(board[x,y]==2){
+                        ret[2]++;
+                    }
+                }
+            }
+            return ret;
+        }
     }
 
     /// <summary>
